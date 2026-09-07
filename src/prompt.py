@@ -2,15 +2,16 @@ from langchain_core.prompts import PromptTemplate
 
 
 def load_reference_prompt():
-    prompt_template = """You are a construction safety expert. \
-Based on the provided question and retrieved safety guidelines, generate a single, comprehensive preventive measure that incorporates key points from the guidelines. \
+    prompt_template = """You are a construction safety expert.
+Based on the provided question and retrieved safety guidelines, generate a single, comprehensive preventive measure that incorporates key points from the guidelines.
+
 Follow these guidelines when responding:
 - Do not provide multiple alternative measures—combine key ideas into one well-structured sentence.
 - Ensure the measure is clear, actionable, and directly applicable to construction sites.
-- Answer must be within ONLY ONE sentence in KOREAN.
+- Keep the response within ONLY ONE sentence in KOREAN.
 
 Question: {question}
-Context:
+Search Results:
 {context}
 
 Answer:"""
@@ -55,8 +56,8 @@ We are trying to find preventive measures in the safety guideline documents. Ple
 
 
 def load_rag_prompt():
-    prompt_template = """You are a construction safety expert. \
-Your task is  to answer preventive measures for the cause of an incident given as a query based on context.
+    prompt_template = """You are a construction safety expert.
+Your task is to synthesize multiple safety responses into a single, comprehensive answer.
 
 The following responses were generated for different aspects of the same safety concern. Each response addresses a specific question related to the main safety issue.
 
@@ -65,17 +66,17 @@ Follow these guidelines when responding:
 - Extract and combine the most critical safety measures from all responses
 - Create a unified, comprehensive safety guideline that addresses the central issue
 - Ensure the final answer is clear, actionable, and directly applicable to construction sites
-- Answer must be within ONLY ONE sentence in KOREAN.
+- Keep the response within ONLY ONE sentence in KOREAN.
 
-Query: {query}
+Accident Cause: {query}
 
-Context:
+Questions and Answers:
 {context}
 
-Answer:"""
+Final Comprehensive Answer:"""
 
     prompt = PromptTemplate(
-        input_variables=["query, context"],
+        input_variables=["query", "context"],
         template=prompt_template,
     )
 
